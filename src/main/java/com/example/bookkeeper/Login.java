@@ -33,13 +33,13 @@ public class Login {
         while (!exit) {
 //            debugUsers();
 //            login:
-        while (!loginSuccessful) {
-            try {
-                displayLogin();
-            } catch (IncorrectPasswordException | UsernameDoesNotExistException e) {
-                System.out.println(e.getMessage());
+            while (!loginSuccessful) {
+                try {
+                    displayLogin();
+                } catch (IncorrectPasswordException | UsernameDoesNotExistException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-        }
             System.out.println("What do you want to do today? Choose a number:");
             System.out.println("1. View my books");
             System.out.println("2. Add a brand new book");
@@ -109,7 +109,7 @@ public class Login {
         Book bookToEdit = database.getBookById(bookChoice);
         System.out.println("You have selected this book to edit: \n" + bookToEdit.toString() + "\n");
         Book newBookRecord = askTheUserForBookDetails(bookToEdit);
-        database.bookMap.put(newBookRecord.getId(),newBookRecord);
+        database.bookMap.put(newBookRecord.getId(), newBookRecord);
         database.saveAllBooks();
         scanner.reset();
     }
