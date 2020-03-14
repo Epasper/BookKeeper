@@ -1,11 +1,9 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.example.bookkeeper.DatabaseMock;
-import com.example.bookkeeper.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

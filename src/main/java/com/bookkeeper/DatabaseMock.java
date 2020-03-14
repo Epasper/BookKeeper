@@ -1,12 +1,12 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 import java.io.*;
 import java.util.*;
 
 public class DatabaseMock {
 
-    File users = new File("src/main/java/com/example/bookkeeper/Users");
-    File books = new File("src/main/java/com/example/bookkeeper/Books");
+    File users = new File("src/main/java/com/bookkeeper/Users");
+    File books = new File("src/main/java/com/bookkeeper/Books");
     Map<String, User> userMap = new HashMap<>();
     Map<Integer, Book> bookMap = new HashMap<>();
 

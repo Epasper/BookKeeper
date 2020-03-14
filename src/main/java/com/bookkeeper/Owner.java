@@ -1,4 +1,4 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 public class Owner extends User {
 }

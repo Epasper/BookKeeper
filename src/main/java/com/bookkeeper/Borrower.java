@@ -1,4 +1,4 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 import java.util.ArrayList;
 import java.util.List;

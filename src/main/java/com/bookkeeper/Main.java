@@ -1,6 +1,4 @@
-package com.example.bookkeeper;
-
-import com.example.bookkeeper.Login;
+package com.bookkeeper;
 
 public class Main {
     public static void main(String[] args) {

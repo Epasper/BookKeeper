@@ -1,11 +1,13 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
+
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
+@Table(name = "BOOK")
 public class Book {
-    @Id
+
     int id;
     String author;
     String title;
@@ -85,4 +87,5 @@ public class Book {
     public void setNumberOfPages(int numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
+
 }

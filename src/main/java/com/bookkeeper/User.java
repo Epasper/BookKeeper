@@ -1,4 +1,4 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 import java.util.Objects;
 

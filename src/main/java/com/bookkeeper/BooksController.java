@@ -1,4 +1,4 @@
-package com.example.bookkeeper;
+package com.bookkeeper;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class BooksService {
+public class BooksController {
 
     DatabaseMock database = new DatabaseMock();
 
