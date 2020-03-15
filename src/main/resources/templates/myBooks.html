@@ -26,5 +26,6 @@
         <td th:if="${isEdit == true}"><a th:href="@{'/deleteABook'(bookId=${myBook.bookId})}">DELETE</a></td>
     </tr>
 </table>
+<a th:href="@{'/index'}">Back to Main Page</a>
 </body>
 </html>

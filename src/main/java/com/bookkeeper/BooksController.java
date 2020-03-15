@@ -14,7 +14,6 @@ public class BooksController {
 
     @Autowired
     BookRepository repository;
-    DatabaseMock database = new DatabaseMock();
 
     @RequestMapping(method = RequestMethod.GET, value = "/addABook")
     @ResponseBody
