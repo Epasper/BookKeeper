@@ -22,7 +22,7 @@
         <td th:text="${myBook.isbn}"></td>
         <td th:text="${myBook.publisher}"></td>
         <td th:text="${myBook.numberOfPages}"></td>
-
+        <td th:if="${isEdit == true}"><a th:href="@{'/editABook'(bookId=${myBook.bookId})}">EDIT</a></td>
     </tr>
 </table>
 </body>
