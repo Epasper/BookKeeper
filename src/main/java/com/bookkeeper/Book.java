@@ -1,12 +1,12 @@
 package com.bookkeeper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "BOOK")
+@Table
 public class Book {
 
     @Id
@@ -17,6 +17,8 @@ public class Book {
     String publisher;
     String isbn;
     int numberOfPages;
+    @OneToMany(mappedBy="book", fetch = FetchType.EAGER)
+    List<Review> reviews = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -41,6 +43,14 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(getBookId());
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public int getBookId() {
