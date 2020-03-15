@@ -60,4 +60,14 @@ public class BooksController {
         }
         return new ModelAndView("index");
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteABook")
+    @ResponseBody
+    public ModelAndView deleteABook(@RequestParam String bookId, Model model) {
+        if (repository.findById(Integer.parseInt(bookId)).isPresent()) {
+            model.addAttribute("selectedBook", repository.findById(Integer.parseInt(bookId)).get());
+        }
+        repository.deleteById(Integer.parseInt(bookId));
+        return new ModelAndView("deleteABook");
+    }
 }

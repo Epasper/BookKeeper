@@ -23,6 +23,7 @@
         <td th:text="${myBook.publisher}"></td>
         <td th:text="${myBook.numberOfPages}"></td>
         <td th:if="${isEdit == true}"><a th:href="@{'/editABook'(bookId=${myBook.bookId})}">EDIT</a></td>
+        <td th:if="${isEdit == true}"><a th:href="@{'/deleteABook'(bookId=${myBook.bookId})}">DELETE</a></td>
     </tr>
 </table>
 </body>

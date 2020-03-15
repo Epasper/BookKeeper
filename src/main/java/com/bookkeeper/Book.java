@@ -2,9 +2,7 @@ package com.bookkeeper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +10,7 @@ import java.util.Objects;
 public class Book {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     int bookId;
     String author;
     String title;
