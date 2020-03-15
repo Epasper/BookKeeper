@@ -59,7 +59,7 @@ public class DatabaseMock {
 
     private void loadASingleBook(String nextRecord) {
         Book book = new Book();
-        book.setId(Integer.parseInt(nextRecord.substring(0, nextRecord.indexOf('|'))));
+        book.setBookId(Integer.parseInt(nextRecord.substring(0, nextRecord.indexOf('|'))));
         nextRecord = nextRecord.substring(nextRecord.indexOf('|') + 1);
         book.setAuthor(nextRecord.substring(0, nextRecord.indexOf('|')));
         nextRecord = nextRecord.substring(nextRecord.indexOf('|') + 1);
@@ -70,13 +70,13 @@ public class DatabaseMock {
         book.setIsbn(nextRecord.substring(0, nextRecord.indexOf('|')));
         nextRecord = nextRecord.substring(nextRecord.indexOf('|') + 1);
         book.setNumberOfPages(Integer.parseInt(nextRecord));
-        bookMap.put(book.getId(), book);
+        bookMap.put(book.getBookId(), book);
     }
 
     public void addABook(Book book) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(books, true));
-            String bookToFile = book.getId() + "|" + book.getAuthor() + "|" + book.getTitle() + "|" + book.getPublisher() + "|" + book.getIsbn() + "|" + book.getNumberOfPages();
+            String bookToFile = book.getBookId() + "|" + book.getAuthor() + "|" + book.getTitle() + "|" + book.getPublisher() + "|" + book.getIsbn() + "|" + book.getNumberOfPages();
             writer.newLine();
             writer.append(bookToFile);
             writer.close();
@@ -105,7 +105,7 @@ public class DatabaseMock {
 
     private Book parseStringForBook(String nextRecord) {
         Book book = new Book();
-        book.setId(Integer.parseInt(nextRecord.substring(0, nextRecord.indexOf('|'))));
+        book.setBookId(Integer.parseInt(nextRecord.substring(0, nextRecord.indexOf('|'))));
         nextRecord = nextRecord.substring(nextRecord.indexOf('|') + 1);
         book.setAuthor(nextRecord.substring(0, nextRecord.indexOf('|')));
         nextRecord = nextRecord.substring(nextRecord.indexOf('|') + 1);

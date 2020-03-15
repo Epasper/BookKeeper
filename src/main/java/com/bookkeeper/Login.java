@@ -107,7 +107,7 @@ public class Login {
         Book bookToEdit = database.getBookById(bookChoice);
         System.out.println("You have selected this book to edit: \n" + bookToEdit.toString() + "\n");
         Book newBookRecord = askTheUserForBookDetails(bookToEdit);
-        database.bookMap.put(newBookRecord.getId(), newBookRecord);
+        database.bookMap.put(newBookRecord.getBookId(), newBookRecord);
         database.saveAllBooks();
         scanner.reset();
     }
@@ -124,9 +124,9 @@ public class Login {
     private Book askTheUserForBookDetails(Book editedBook) {
         Scanner scanner = new Scanner(System.in);
         Book book = new Book();
-        book.setId(database.getNumberOfBooks());
+        book.setBookId(database.getNumberOfBooks());
         if (editedBook != null) {
-            book.setId(editedBook.getId());
+            book.setBookId(editedBook.getBookId());
         }
         System.out.println("Type the author of the book");
         if (editedBook != null) {

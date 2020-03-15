@@ -1,6 +1,9 @@
 package com.bookkeeper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -8,7 +11,8 @@ import java.util.Objects;
 @Table(name = "BOOK")
 public class Book {
 
-    int id;
+    @Id
+    int bookId;
     String author;
     String title;
     String publisher;
@@ -18,7 +22,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + bookId +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +
@@ -32,20 +36,20 @@ public class Book {
         if (this == o) return true;
         if (!(o instanceof Book)) return false;
         Book book = (Book) o;
-        return getId() == book.getId();
+        return getBookId() == book.getBookId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getBookId());
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getAuthor() {

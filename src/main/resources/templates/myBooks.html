@@ -16,7 +16,7 @@
         <th>Number of Pages</th>
     </tr>
     <tr th:each="myBook: ${allBooks}">
-        <td th:text="${myBook.id}"></td>
+        <td th:text="${myBook.bookId}"></td>
         <td th:text="${myBook.title}"></td>
         <td th:text="${myBook.author}"></td>
         <td th:text="${myBook.isbn}"></td>
