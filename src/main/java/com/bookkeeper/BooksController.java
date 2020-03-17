@@ -13,8 +13,6 @@ public class BooksController {
 
     @Autowired
     BookRepository bookRepository;
-    @Autowired
-    ReviewRepository reviewRepository;
 
     @RequestMapping(method = RequestMethod.GET, value = "/addABook")
     @ResponseBody
@@ -72,29 +70,4 @@ public class BooksController {
         return new ModelAndView("deleteABook");
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/addAReview")
-    @ResponseBody
-    public ModelAndView reviewForm(@RequestParam String bookId, Model model) {
-        if (bookRepository.findById(Integer.parseInt(bookId)).isPresent()) {
-            model.addAttribute("selectedBook", bookRepository.findById(Integer.parseInt(bookId)).get());
-        }
-        Review review = new Review();
-        //review.setBookId(Integer.parseInt(bookId));
-        model.addAttribute("reviewForm", review);
-        return new ModelAndView("addAReview");
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/addAReview")
-    @ResponseBody
-    public ModelAndView addAReview(@ModelAttribute("reviewForm") Review review, @ModelAttribute("selectedBook") Book book) {
-        // if (bookRepository.findById(review.getBookId()).isPresent()) {
-        // Book bookToUpdate = bookRepository.findById(review.getBookId()).get();
-        //bookToUpdate.getReviews().add(review);
-        review.setBook(book);
-        bookRepository.save(book);
-        reviewRepository.save(review);
-        //bookRepository.save(bookToUpdate);
-        //  }
-        return new ModelAndView("index");
-    }
 }
