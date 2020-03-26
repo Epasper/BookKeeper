@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ReviewController {
 
+    Book currentBook;
+
     @Autowired
     BookRepository bookRepository;
     @Autowired
@@ -18,20 +20,35 @@ public class ReviewController {
     @ResponseBody
     public ModelAndView reviewForm(@RequestParam String bookId, Model model) {
         if (bookRepository.findById(Integer.parseInt(bookId)).isPresent()) {
-            model.addAttribute("selectedBook", bookRepository.findById(Integer.parseInt(bookId)).get());
+            Book book = bookRepository.findById(Integer.parseInt(bookId)).get();
+            model.addAttribute("selectedBook", book);
+            Review review = new Review(book);
+            currentBook = book;
+            model.addAttribute("reviewForm", review);
+            model.addAttribute("bookId", bookId);
         }
-        Review review = new Review();
-        model.addAttribute("reviewForm", review);
         return new ModelAndView("addAReview");
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addAReview")
     @ResponseBody
-    public ModelAndView addAReview(@ModelAttribute("reviewForm") Review review, @ModelAttribute("selectedBook") Book book) {
-        review.setBook(book);
-        bookRepository.save(book);
-        reviewRepository.save(review);
+    public ModelAndView addAReview(@ModelAttribute("reviewForm") Review review, @ModelAttribute("selectedBook") Book book, Model model) {
+//        System.out.println(review);
+        System.out.println("POST" + currentBook);
+//        System.out.println(model.getAttribute("reviewForm"));
+//        System.out.println(model.getAttribute("selectedBook"));
+            review.setBook(currentBook);
+            reviewRepository.save(review);
         return new ModelAndView("index");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/displayReviews")
+    @ResponseBody
+    public ModelAndView displayReview(@RequestParam String bookId, Model model) {
+        if (bookRepository.findById(Integer.parseInt(bookId)).isPresent()) {
+            model.addAttribute("selectedBookReviews", bookRepository.findById(Integer.parseInt(bookId)).get().getReviews());
+        }
+        return new ModelAndView("displayReviews");
     }
 
 }

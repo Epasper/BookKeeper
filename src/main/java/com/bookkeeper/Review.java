@@ -4,27 +4,39 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Optional;
 
-@Entity
+@Entity(name = "Review")
 @Table(name = "REVIEW")
 public class Review {
+
+    public Review() {
+    }
+
+    public Review(Book book) {
+        this.book = book;
+    }
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "book_id")
+            Book book;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int reviewId;
     //int bookId;
+    //int matchedBook;
     String author;
     String message;
     int rating;
 
-    @ManyToOne
-    @JoinColumn(name="book_id", nullable=false)
-    Book book;
 
     @Override
     public String toString() {
         return "Review{" +
-                "reviewId=" + reviewId +
-                ", Author='" + author + '\'' +
+                "book=" + book +
+                ", reviewId=" + reviewId +
+                ", author='" + author + '\'' +
                 ", message='" + message + '\'' +
                 ", rating=" + rating +
                 '}';
@@ -34,11 +46,7 @@ public class Review {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Review)) return false;
-        Review review = (Review) o;
-        return reviewId == review.reviewId &&
-                rating == review.rating &&
-                Objects.equals(author, review.author) &&
-                Objects.equals(message, review.message);
+        return reviewId == ((Review) o).getReviewId();
     }
 
     @Override
@@ -52,6 +60,14 @@ public class Review {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }*/
+
+    /*public int getMatchedBook() {
+        return matchedBook;
+    }
+
+    public void setMatchedBook(int matchedBook) {
+        this.matchedBook = matchedBook;
     }*/
 
     public Book getBook() {

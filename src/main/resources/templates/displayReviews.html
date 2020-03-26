@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>author</th>
+        <th>message</th>
+        <th>rating</th>
+    </tr>
+    <tr th:each="review: ${selectedBookReviews}">
+        <td th:text="${review.author}"></td>
+        <td th:text="${review.message}"></td>
+        <td th:text="${review.rating}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table
+@Entity(name = "Book")
+@Table(name = "book")
 public class Book {
 
     @Id
@@ -17,8 +17,23 @@ public class Book {
     String publisher;
     String isbn;
     int numberOfPages;
-    @OneToMany(mappedBy="book", fetch = FetchType.EAGER)
+    @OneToMany(
+            mappedBy="book",
+            fetch = FetchType.EAGER,
+            cascade=CascadeType.ALL,
+            orphanRemoval = true
+    )
     List<Review> reviews = new ArrayList<>();
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setBook(this);
+    }
+
+    public void removeComment(Review review) {
+        reviews.remove(review);
+        review.setBook(null);
+    }
 
     @Override
     public String toString() {
