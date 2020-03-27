@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
     private RequestCache requestCache = new HttpSessionRequestCache();
 
+    //todo send the activation mail on login
     @RequestMapping("/authenticate")
     public String authenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean authenticate = request.authenticate(response);

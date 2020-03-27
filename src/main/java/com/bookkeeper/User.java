@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class User {
 
+    //todo think about the friend system and book sharing between users. many-to-many relationship between users with a cross object "friend"?
+
+
     String username;
     String firstName;
     String surname;
