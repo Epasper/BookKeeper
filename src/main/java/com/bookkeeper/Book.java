@@ -25,6 +25,12 @@ public class Book {
     )
     List<Review> reviews = new ArrayList<>();
 
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "borrower_id")
+    Borrower borrower;
+
     public void addReview(Review review) {
         reviews.add(review);
         review.setBook(this);
@@ -58,6 +64,14 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(getBookId());
+    }
+
+    public Borrower getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(Borrower borrower) {
+        this.borrower = borrower;
     }
 
     public List<Review> getReviews() {

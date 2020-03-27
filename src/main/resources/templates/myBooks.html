@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>My Books</title>
@@ -25,7 +25,7 @@
         <td th:if="${isEdit == true}"><a th:href="@{'/editABook'(bookId=${myBook.bookId})}">EDIT</a></td>
         <td th:if="${isEdit == true}"><a th:href="@{'/deleteABook'(bookId=${myBook.bookId})}">DELETE</a></td>
         <td th:if="${isAddReview == true}"><a th:href="@{'/addAReview'(bookId=${myBook.bookId})}">ADD A REVIEW</a></td>
-        <td th:if="${isDisplayReviews == true}"><a th:href="@{'/displayReview'(bookId=${myBook.bookId})}">Display Reviews</a></td>
+        <td th:if="${isDisplayReviews == true}"><a th:href="@{'/displayReviews'(bookId=${myBook.bookId})}">Display Reviews</a></td>
     </tr>
 </table>
 <a th:href="@{'/index'}">Back to Main Page</a>

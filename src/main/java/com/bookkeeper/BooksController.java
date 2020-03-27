@@ -30,11 +30,12 @@ public class BooksController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/myBooks")
     @ResponseBody
-    public ModelAndView chooseABookToEdit(@RequestParam(required = false) boolean isEdit, @RequestParam(required = false) boolean isAddReview, Model model) {
+    public ModelAndView chooseABookToEdit(@RequestParam(required = false) boolean isDisplayReviews, @RequestParam(required = false) boolean isEdit, @RequestParam(required = false) boolean isAddReview, Model model) {
         List<Book> listOfBooks = (List<Book>) bookRepository.findAll();
         model.addAttribute("isEdit", isEdit);
         model.addAttribute("isAddReview", isAddReview);
         model.addAttribute("allBooks", listOfBooks);
+        model.addAttribute("isDisplayReviews", isDisplayReviews);
         return new ModelAndView("myBooks");
     }
 

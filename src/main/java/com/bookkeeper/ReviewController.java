@@ -33,10 +33,7 @@ public class ReviewController {
     @RequestMapping(method = RequestMethod.POST, value = "/addAReview")
     @ResponseBody
     public ModelAndView addAReview(@ModelAttribute("reviewForm") Review review, @ModelAttribute("selectedBook") Book book, Model model) {
-//        System.out.println(review);
         System.out.println("POST" + currentBook);
-//        System.out.println(model.getAttribute("reviewForm"));
-//        System.out.println(model.getAttribute("selectedBook"));
             review.setBook(currentBook);
             reviewRepository.save(review);
         return new ModelAndView("index");
@@ -44,11 +41,12 @@ public class ReviewController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/displayReviews")
     @ResponseBody
-    public ModelAndView displayReview(@RequestParam String bookId, Model model) {
+    public ModelAndView displayReviews(@RequestParam String bookId, Model model) {
         if (bookRepository.findById(Integer.parseInt(bookId)).isPresent()) {
             model.addAttribute("selectedBookReviews", bookRepository.findById(Integer.parseInt(bookId)).get().getReviews());
         }
         return new ModelAndView("displayReviews");
     }
+
 
 }
