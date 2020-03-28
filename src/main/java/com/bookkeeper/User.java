@@ -1,17 +1,52 @@
 package com.bookkeeper;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Entity(name = "User")
+@Table(name = "user")
 public class User {
 
     //todo think about the friend system and book sharing between users. many-to-many relationship between users with a cross object "friend"?
-
 
     String username;
     String firstName;
     String surname;
     String email;
     String password;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    int userId;
+
+    @OneToMany(
+            mappedBy="owner",
+            cascade=CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Book> ownedBooks = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy="borrowedBy",
+            cascade=CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Book> borrowedBooks = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy="user",
+            cascade=CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Friend> friendList;
 
     @Override
     public String toString() {
@@ -76,4 +111,38 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Friend> getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(List<Friend> friendList) {
+        this.friendList = friendList;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public List<Book> getBorrowedBooks() {
+        return ownedBooks;
+    }
+
+    public void setBorrowedBooks(List<Book> borrowedBooks) {
+        this.ownedBooks = borrowedBooks;
+    }
+
+    public List<Book> getOwnedBooks() {
+        return ownedBooks;
+    }
+
+    public void setOwnedBooks(List<Book> ownedBooks) {
+        this.ownedBooks = ownedBooks;
+    }
+
+
 }

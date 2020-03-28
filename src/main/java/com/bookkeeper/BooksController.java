@@ -11,6 +11,8 @@ import java.util.List;
 @Controller
 public class BooksController {
 
+    User currentUser;
+
     @Autowired
     BookRepository bookRepository;
 

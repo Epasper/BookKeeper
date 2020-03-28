@@ -1,6 +1,7 @@
 package com.bookkeeper;
 
 import com.bookkeeper.CustomLogoutSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,7 +17,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 
 @Configuration
-// @ImportResource({ "classpath:webSecurityConfig.xml" })
 @EnableWebSecurity
 @Profile("!https")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig() {
         super();
     }
+
+    //@Autowired
+    //private UserService userService;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -46,17 +49,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/login*").permitAll()
+                .antMatchers("/createAUser*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/index.html", true)
-                //.failureUrl("/login.html?error=true")
-                .failureHandler(authenticationFailureHandler())
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index", true)
+                .failureUrl("/login?error=true")
+                //.failureHandler(authenticationFailureHandler())
                 .and()
                 .logout()
-                .logoutUrl("/perform_logout")
+                .logoutUrl("/login.html?logout=true")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(logoutSuccessHandler());
         //.and()
