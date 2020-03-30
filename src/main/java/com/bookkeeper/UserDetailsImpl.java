@@ -7,10 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 
-public class UserPrincipal implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
     private User user;
 
-    public UserPrincipal(User user) {
+    public UserDetailsImpl(User user) {
         this.user = user;
     }
 

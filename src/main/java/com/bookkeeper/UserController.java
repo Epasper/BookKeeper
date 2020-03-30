@@ -24,6 +24,7 @@ public class UserController {
     @ResponseBody
     public ModelAndView userForm(Model model) {
         //todo add salt to password
+        //todo username == null should throw an exception
         model.addAttribute("userForm", new User());
         return new ModelAndView("createAUser");
     }
