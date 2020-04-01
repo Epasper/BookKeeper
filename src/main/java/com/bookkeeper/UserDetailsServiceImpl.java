@@ -1,39 +1,44 @@
 package com.bookkeeper;
 
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
     @Autowired
-    private UserRepository userRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
-    @Transactional(readOnly = true)
+    DataSource dataSource;
+
+    @Autowired
+    private UserDAO appUserDAO = new UserDAO();
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        userRepository.findAll().forEach(e -> System.out.println(e.getUsername()));
-        User user = (User)userRepository.findAll().stream().filter(e -> e.getUsername().equals(username));
-        if (user == null) {
-            System.out.println(username + " Not Found; ");
-            throw new UsernameNotFoundException("User not found.");
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+
+        User appUser = null;
+        appUser = this.appUserDAO.findUserAccount(userName);
+
+
+        if (appUser == null) {
+            System.out.println("User not found! " + userName);
+            throw new UsernameNotFoundException("User " + userName + " was not found in the database");
         }
-        System.out.println(user.getUsername() + " Not Found; ");
-        log.info("loadUserByUsername() : {}", username);
-        return new UserDetailsImpl(user);
+
+        System.out.println("Found User: " + appUser);
+
+        UserDetails userDetails = (UserDetails) new User(appUser.getUsername(),
+                appUser.getEncryptedPassword(), appUser.getUserId());
+
+        return userDetails;
     }
 }

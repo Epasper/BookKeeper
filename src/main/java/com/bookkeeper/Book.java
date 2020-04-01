@@ -30,7 +30,7 @@ public class Book {
             fetch = FetchType.LAZY,
             cascade = CascadeType.REFRESH)
     @JoinColumn(name = "owner_id")
-    User owner = new User();
+    User owner;
 
     @ManyToOne(
             fetch = FetchType.LAZY,

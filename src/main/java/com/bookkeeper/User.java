@@ -12,6 +12,16 @@ import java.util.Objects;
 @Table(name = "user")
 public class User {
 
+    public User() {
+
+    }
+
+    public User(String username, String password, long userId) {
+        this.username = username;
+        this.password = password;
+        this.userId = userId;
+    }
+
     //todo think about the friend system and book sharing between users. many-to-many relationship between users with a cross object "friend"?
 
     @Column(nullable = false, unique = true)
@@ -20,11 +30,12 @@ public class User {
     String surname;
     String email;
     String password;
-
+    String encryptedPassword;
+    String role;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    int userId;
+    long userId;
 
     @OneToMany(
             mappedBy="owner",
@@ -122,11 +133,11 @@ public class User {
         this.friendList = friendList;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -146,5 +157,19 @@ public class User {
         this.ownedBooks = ownedBooks;
     }
 
+    public String getEncryptedPassword() {
+        return encryptedPassword;
+    }
 
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
