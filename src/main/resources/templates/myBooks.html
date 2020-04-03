@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="../css/myBooksStyle.css">
+
 <head>
     <meta charset="UTF-8">
-    <title>My Books</title>
+    <title>Book Keeper - My Books</title>
 </head>
+
 <body>
-<h1>List of Books:</h1>
+<header>
+    <nav class="menu">
+        <a href="/myBooks">View my Books</a>
+        <a href="/addABook">Add a New Book</a>
+        <a href="/myBooks?isEdit=true">Edit or Delete a Book</a>
+        <a href="/myBooks?isAddReview=true">Add a Review</a>
+        <a href="/myBooks?isDisplayReviews=true">View Reviews</a>
+        <a href="#">View all Book Borrowers</a>
+        <a href="#">Add a Book Borrower</a>
+    </nav>
+    <h1 class="title">Book Keeper</h1>
+</header>
+
+<h1 class="subtitle">List of Books:</h1>
 <table>
     <tr>
         <th>No</th>
@@ -24,10 +40,13 @@
         <td th:text="${myBook.numberOfPages}"></td>
         <td th:if="${isEdit == true}"><a th:href="@{'/editABook'(bookId=${myBook.bookId})}">EDIT</a></td>
         <td th:if="${isEdit == true}"><a th:href="@{'/deleteABook'(bookId=${myBook.bookId})}">DELETE</a></td>
-        <td th:if="${isAddReview == true}"><a th:href="@{'/addAReview'(bookId=${myBook.bookId})}">ADD A REVIEW</a></td>
-        <td th:if="${isDisplayReviews == true}"><a th:href="@{'/displayReviews'(bookId=${myBook.bookId})}">Display Reviews</a></td>
+        <td th:if="${isAddReview == true}"><a th:href="@{'/addAReview'(bookId=${myBook.bookId})}">ADD A REVIEW</a>
+        </td>
+        <td th:if="${isDisplayReviews == true}"><a th:href="@{'/displayReviews'(bookId=${myBook.bookId})}">Display
+            Reviews</a></td>
     </tr>
 </table>
-<a th:href="@{'/index'}">Back to Main Page</a>
+<a class="backToMenu" th:href="@{'/index'}">Back to Main Page</a>
 </body>
+
 </html>
