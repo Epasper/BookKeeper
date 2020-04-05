@@ -29,6 +29,7 @@ div.loginForm {
     transform: translate(-50%, -50%);
     height: 80vh;
     width: 60vw;
+    box-shadow: 0 0 20px black;
 }
 
 h1 {
