@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: arial, sans-serif;
+    font-size: 10px;
+}
+
+header {
+    height: 80vh;
+    background-image: url(../images/header.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+nav {
+    position: fixed;
+    text-align: center;
+    background-color: rgba(221, 214, 189, 0.9);
+    width: 100%;
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid white;
+    font-size: 1.6rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 15px 2px;
+    transition: 0.2s;
+}
+
+h1.title {
+    position: absolute;
+    font-family: arial, sans-serif;
+    color: white;
+    font-size: 80px;
+    bottom: 100px;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+nav a:hover {
+    color: white;
+    background-color: #437870;
+}
+
+h1.subtitle {
+    font-size: 36px;
+    margin: 10px auto 5px 150px;
+    padding: 5px;
+}
+
+th {
+    font-size: 18px;
+    padding: 3px;
+    margin: 3px 2px;
+    width: calc(70%/6);
+}
+
+table {
+    min-height: 1000px;
+}
+
+a.backToMenu {
+    font-size: 18px;
+    padding: 10px;
+    color: #437870;
+    cursor: pointer;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
