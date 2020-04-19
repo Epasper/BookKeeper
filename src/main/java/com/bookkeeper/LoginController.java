@@ -1,5 +1,6 @@
 package com.bookkeeper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(required = false) boolean error, Model model) {
+        System.out.println("Model:" + model.toString());
+        System.out.println("Model:" + model.getAttribute("username"));
         if (error) {
             model.addAttribute("loginError", true);
         }

@@ -31,7 +31,6 @@ public class User {
     String email;
     String password;
     String encryptedPassword;
-    String role;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -69,6 +68,11 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", encryptedPassword='" + encryptedPassword + '\'' +
+                ", userId=" + userId +
+                ", ownedBooks=" + ownedBooks +
+                ", borrowedBooks=" + borrowedBooks +
+                ", friendList=" + friendList +
                 '}';
     }
 
@@ -165,11 +169,4 @@ public class User {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

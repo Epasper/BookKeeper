@@ -19,14 +19,14 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
-
 
 @Configuration
 @EnableWebSecurity
 @Profile("!https")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private String usersQuery =
+            "select email, password from users where email=?";
 
     public SecurityConfig() {
         super();
@@ -47,7 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .passwordEncoder(passwordEncoder())
+                .dataSource(DataSourceCreator.getDataSource());
+
         // @formatter:off
 /*        auth.inMemoryAuthentication()
                 .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("USER")
@@ -60,34 +65,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
         http
-                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/anonymous*").anonymous()
-                .antMatchers("/login*").permitAll()
-                .antMatchers("/createAUser*").permitAll()
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/images/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/").permitAll()
+                .antMatchers("/index").permitAll()
+                .antMatchers("/home").authenticated()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/access-denied").permitAll()
+                .antMatchers("/logout").permitAll()
+                .antMatchers("/getDev").authenticated()
                 .and()
-                .formLogin()
+                .formLogin().permitAll()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index", true)
-                .failureUrl("/login?error=true")
-                //.failureHandler(authenticationFailureHandler())
+                .defaultSuccessUrl("/home")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .and()
-                .logout()
-                .logoutUrl("/login.html?logout=true")
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessHandler(logoutSuccessHandler());
-        //todo accessDenied page and PageNotFound page
-        //.and()
-        //.exceptionHandling().accessDeniedPage("/accessDenied");
-        //.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-        // @formatter:on
+                .csrf().disable()
+                .logout();
     }
 
     @Bean

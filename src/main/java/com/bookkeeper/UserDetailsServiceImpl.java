@@ -1,32 +1,56 @@
 package com.bookkeeper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     private UserDAO appUserDAO = new UserDAO();
 
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+
+        @Override
+        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+            User user = findUserByUsername(username);
+
+            org.springframework.security.core.userdetails.User.UserBuilder builder = null;
+            if (user != null) {
+                builder = org.springframework.security.core.userdetails.User.withUsername(username);
+                builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
+                System.out.println("User Found");
+                //builder.roles(user.getRoles());
+            } else {
+                System.out.println("User Not Found");
+                throw new UsernameNotFoundException("User not found.");
+            }
+
+            return builder.build();
+        }
+
+/*        private User findUserByUsername(String username) {
+            if(username.equalsIgnoreCase("admin")) {
+                return new User(username, "admin123");
+            }
+            return null;
+        }*/
+
+
+    public User findUserByUsername(String userName) throws UsernameNotFoundException {
 
         User appUser = null;
-        appUser = this.appUserDAO.findUserAccount(userName);
+        try {
+            appUser = appUserDAO.findByUsername(userName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         if (appUser == null) {
@@ -36,9 +60,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         System.out.println("Found User: " + appUser);
 
-        UserDetails userDetails = (UserDetails) new User(appUser.getUsername(),
-                appUser.getEncryptedPassword(), appUser.getUserId());
-
-        return userDetails;
+        return appUser;
     }
 }
