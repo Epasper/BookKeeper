@@ -67,22 +67,68 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/index").permitAll()
-                .antMatchers("/home").authenticated()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/access-denied").permitAll()
-                .antMatchers("/logout").permitAll()
-                .antMatchers("/getDev").authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/anonymous*").anonymous()
+                .antMatchers("/login*").permitAll()
+                .antMatchers("/createAUser*").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
+                .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .usernameParameter("username")
-                .passwordParameter("password")
+                //.permitAll()
+        ;
+        ;
+       /* // @formatter:off
+        http.authorizeRequests()
+                //.antMatchers("/admin/**").hasRole("ADMIN")
+                //.antMatchers("/anonymous*").anonymous()
+*//*                .antMatchers("/login*").permitAll()
+                .antMatchers("/createAUser*").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/images/**").permitAll()*//*
+         *//*                .anyRequest().authenticated()
                 .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/index", true)
+                ;*//*
+                //.and()
+                //.logout()
+                //.logoutUrl("/login.html?logout=true")
+                //.deleteCookies("JSESSIONID")
+                //.logoutSuccessHandler(logoutSuccessHandler());
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic(); // Authenticate users with HTTP basic authentication
+        *//*http
                 .csrf().disable()
-                .logout();
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/anonymous*").anonymous()
+                .antMatchers("/login*").permitAll()
+                .antMatchers("/createAUser*").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index", true)
+                .failureUrl("/login?error=true")
+                //.failureHandler(authenticationFailureHandler())
+                .and()
+                .logout()
+                .logoutUrl("/login.html?logout=true")
+                //.deleteCookies("JSESSIONID")
+                .logoutSuccessHandler(logoutSuccessHandler());*/
+        //todo accessDenied page and PageNotFound page
+        //.and()
+        //.exceptionHandling().accessDeniedPage("/accessDenied");
+        //.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        // @formatter:on
     }
 
     @Bean
